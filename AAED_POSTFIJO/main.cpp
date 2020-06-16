@@ -16,7 +16,7 @@ int calcula(char*,char*);
 int buscaValor(char*,char);
 
 int main(){
-	cout<<buscaValor("A34B7C45D9",'C');
+	cout<<buscaValor("A34B7C45D9",'D');
 	return 0;
 }
 
