@@ -19,7 +19,7 @@ class Cocina{
 public:
 	// Constructor y destructor
 	Cocina(double);
-	~Cocina();
+	~Cocina(){};
 
 	// Métodos
 	bool puedeColocar(Mueble&);
