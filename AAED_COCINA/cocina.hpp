@@ -8,11 +8,12 @@
 #ifndef COCINA_HPP_
 #define COCINA_HPP_
 
+#include <ostream>
 #include "lista_doble.hpp"
 
-typedef struct Mueble{
+struct Mueble{
 	double pos_, ancho_;
-	Mueble(double,double);
+	Mueble(double =0,double =0);
 };
 
 class Cocina{
@@ -23,15 +24,20 @@ public:
 
 	// Métodos
 	bool puedeColocar(Mueble&);
-	void añade(Mueble&);
+	void anade(Mueble);
 	Mueble muebleIesimo(int);
 	void eliminaMuebleIesimo(int);
 	void mueveMueble(int);
+
+	// He sobrecargado el operador de inserción para poder hacer más fácilmente pruebas del funcionamiento
+	friend std::ostream& operator <<(std::ostream&,Cocina&);
 
 private:
 	double longitud_;
 	int nMuebles_;
 	Lista<Mueble> muebles_;
 };
+
+std::ostream& operator <<(std::ostream&,Cocina&);
 
 #endif /* COCINA_HPP_ */

@@ -30,17 +30,27 @@ bool Cocina::puedeColocar(Mueble &m){
 	return res;
 }
 
-void Cocina::añade(Mueble& m){
+void Cocina::anade(Mueble m){
 	if(puedeColocar(m)){
 		if(nMuebles_==0){
-			muebles_.insertar(m,muebles_.fin());
+			muebles_.insertar(m,muebles_.primera());
 		}else{
-			Lista<Mueble>::posicion p=muebles_.primera();
-			while(p!=muebles_.fin()){
-				if(muebles_.elemento(p).pos_>m.pos_){
-					muebles_.insertar(m,p);
+			if(nMuebles_==1){
+				if((m.ancho_+m.pos_)<muebles_.elemento(muebles_.primera()).pos_){
+					muebles_.insertar(m,muebles_.primera());
+				}else{
+					muebles_.insertar(m,muebles_.fin());
 				}
-				p=muebles_.siguiente(p);
+			}else{
+				bool fin_=false;
+				Lista<Mueble>::posicion p=muebles_.primera();
+				while(p!=muebles_.fin() && fin_==false){
+					if((m.ancho_+m.pos_)<muebles_.elemento(muebles_.siguiente(p)).pos_ && (muebles_.elemento(p).pos_+muebles_.elemento(p).ancho_)<m.pos_){
+						muebles_.insertar(m,p);
+						fin_=true;
+					}
+					p=muebles_.siguiente(p);
+				}
 			}
 		}
 		nMuebles_++;
@@ -71,7 +81,19 @@ void Cocina::mueveMueble(int i){
 	aux=muebleIesimo(i);
 	aux.pos_=posAux_;
 	eliminaMuebleIesimo(i);
-	añade(aux);
+	anade(aux);
+}
+
+std::ostream& operator <<(std::ostream &os, Cocina &c){
+	int i=0;
+	Lista<Mueble>::posicion p=c.muebles_.primera();
+	while(p!=c.muebles_.fin()){
+		os<<"Mueble "<<i<<":\n\tPosición - "<<c.muebles_.elemento(p).pos_<<"\n\tAncho - "<<c.muebles_.elemento(p).ancho_<<std::endl;
+		i++;
+		p=c.muebles_.siguiente(p);
+	}
+
+	return os;
 }
 
 /*
