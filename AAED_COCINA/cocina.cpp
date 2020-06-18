@@ -35,22 +35,24 @@ void Cocina::anade(Mueble m){
 		if(nMuebles_==0){
 			muebles_.insertar(m,muebles_.primera());
 		}else{
-			if(nMuebles_==1){
-				if((m.ancho_+m.pos_)<muebles_.elemento(muebles_.primera()).pos_){
-					muebles_.insertar(m,muebles_.primera());
-				}else{
-					muebles_.insertar(m,muebles_.fin());
-				}
-			}else{
-				bool fin_=false;
-				Lista<Mueble>::posicion p=muebles_.primera();
-				while(p!=muebles_.fin() && fin_==false){
-					if((m.ancho_+m.pos_)<muebles_.elemento(muebles_.siguiente(p)).pos_ && (muebles_.elemento(p).pos_+muebles_.elemento(p).ancho_)<m.pos_){
-						muebles_.insertar(m,p);
+			bool fin_=false;
+			Lista<Mueble>::posicion p=muebles_.primera();
+			while(p!=muebles_.fin() && fin_==false){
+				if(p==muebles_.primera()){
+					if((m.ancho_+m.pos_)<=muebles_.elemento(p).pos_){
+						muebles_.insertar(m,muebles_.primera());
 						fin_=true;
 					}
-					p=muebles_.siguiente(p);
 				}
+				if(p!=muebles_.anterior(muebles_.fin()) && (m.ancho_+m.pos_)<=muebles_.elemento(muebles_.siguiente(p)).pos_ && (muebles_.elemento(p).pos_+muebles_.elemento(p).ancho_)<=m.pos_){
+					muebles_.insertar(m,muebles_.siguiente(p));
+					fin_=true;
+				}
+				if(p==muebles_.anterior(muebles_.fin())){
+					muebles_.insertar(m,muebles_.fin());
+					fin_=true;
+				}
+				p=muebles_.siguiente(p);
 			}
 		}
 		nMuebles_++;
