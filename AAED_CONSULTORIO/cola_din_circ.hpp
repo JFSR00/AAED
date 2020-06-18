@@ -9,16 +9,16 @@
 #define COLA_DIN_CIRC_HPP_
 #include <cassert>
 
-template<typename T> class cola{
+template<typename T> class Cola{
 public:
-	cola();
-	cola(cola<T>&);
-	cola<T>& operator =(const cola<T>&);
+	Cola();
+	Cola(Cola<T>&);
+	Cola<T>& operator =(const Cola<T>&);
 	void push(T);
 	void pop();
 	const T& frente() const;
 	const bool vacia() const;
-	~cola();
+	~Cola();
 
 private:
 	struct nodo{
@@ -29,32 +29,32 @@ private:
 
 	nodo *fin;
 
-	void copiar(const cola<T>&);
+	void copiar(const Cola<T>&);
 };
 
 template<typename T>
-cola<T>::cola():fin(0){}
+Cola<T>::Cola():fin(0){}
 
 template<typename T>
-cola<T>::cola(cola<T>& C):
+Cola<T>::Cola(Cola<T>& C):
 fin(0)
 {
 	copiar(C);
 }
 
 template<typename T>
-inline cola<T>& cola<T>::operator =(const cola<T>& C)
+inline Cola<T>& Cola<T>::operator =(const Cola<T>& C)
 {
 	if(this!=&C)
 	{
-		this->~cola();
+		this->~Cola();
 		copiar(C);
 	}
 	return *this;
 }
 
 template<typename T>
-void cola<T>::push(T num)
+void Cola<T>::push(T num)
 {
 	if(fin)
 	{
@@ -68,7 +68,7 @@ void cola<T>::push(T num)
 }
 
 template<typename T>
-void cola<T>::pop()
+void Cola<T>::pop()
 {
 	assert(!vacia());
 	if(fin==fin->sig)
@@ -85,31 +85,31 @@ void cola<T>::pop()
 }
 
 template<typename T>
-inline const T& cola<T>::frente() const
+inline const T& Cola<T>::frente() const
 {
 	assert(!vacia());
 	return fin->sig->elem;
 }
 
 template<typename T>
-inline const bool cola<T>::vacia() const
+inline const bool Cola<T>::vacia() const
 {
 	return (!fin);
 }
 
 template<typename T>
-cola<T>::~cola()
+Cola<T>::~Cola()
 {
 	while(fin)
 	{
-		cola<T>::pop();
+		Cola<T>::pop();
 	}
 }
 
 template<typename T>
-void cola<T>::copiar(const cola<T>& C)
+void Cola<T>::copiar(const Cola<T>& C)
 {
-	if(!C.cola<T>::vacia())
+	if(!C.Cola<T>::vacia())
 	{
 		fin=new nodo(C.frente());
 		nodo *p=C.fin->sig->sig;

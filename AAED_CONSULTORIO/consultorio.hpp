@@ -8,25 +8,43 @@
 #ifndef CONSULTORIO_HPP_
 #define CONSULTORIO_HPP_
 
+#include <string>
+#include <ostream>
 #include "lista_doble.hpp"
 #include "cola_din_circ.hpp"
 
+struct Paciente{
+	std::string nom_,ape_,dni_;
+	Paciente(std::string ="NO_NOMBRE",std::string ="NO_APELLIDO",std::string ="0000");
+};
+
+struct Medico{
+	int id_;
+	Cola<Paciente> listaEspera_;
+
+	bool operator ==(const Medico&);
+
+	Medico(int =0);
+	Medico(Medico&);
+};
+
+class Consultorio{
+public:
+	Consultorio() = default;
+
+	void alta(const Medico&);
+	void baja(const Medico&);
+	void anadePaciente(const Medico&,Paciente);
+	Paciente siguientePaciente(const Medico&);
+	void atenderPaciente(const Medico&);
+	bool tienePaciente(const Medico&);
+
+	friend std::ostream& operator <<(std::ostream&, Consultorio&);
+
+private:
+	Lista<Medico> medicos_;
+};
+
+std::ostream& operator <<(std::ostream&, Consultorio&);
 
 #endif /* CONSULTORIO_HPP_ */
-
-/*
-La dirección de un hospital quiere informatizar su consultorio médico que está en constante
-crecimiento por medio de un sistema que permita realizar al menos las siguientes operaciones
-
-	- Generar un consultorio vacío sin ninguna información.
-	- Dar de alta un nuevo médico.
-	- Dar de baja un médico.
-	- Poner a un paciente en la lista de espera de un médico.
-	- Consultar al paciente que le toque el turno para ser atendido por un médico.
-	- Atender al paciente que le toque por parte de un médico.
-	- Comprobar si un médico determinado tiene o no pacientes en espera.
-
-a) Realice la especificación del TAD.
-b) Diseñe una estructura de datos adecuada para representar el TAD e implemente las
-   operaciones anteriores.
- */
