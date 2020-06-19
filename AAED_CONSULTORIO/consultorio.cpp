@@ -11,8 +11,7 @@ Paciente::Paciente(std::string n, std::string a, std::string d):nom_(n), ape_(a)
 
 Medico::Medico(int id):id_(id){}
 
-Medico::Medico(Medico& m){
-	id_=m.id_;
+Medico::Medico(const Medico& m):id_(m.id_){
 	listaEspera_=m.listaEspera_;
 }
 
@@ -41,7 +40,7 @@ void Consultorio::atenderPaciente(const Medico& m){
 }
 
 bool Consultorio::tienePaciente(const Medico& m){
-	return medicos_.elemento(medicos_.buscar(m)).listaEspera_.vacia();
+	return !medicos_.elemento(medicos_.buscar(m)).listaEspera_.vacia();
 }
 
 std::ostream& operator <<(std::ostream& os, Consultorio& c){
@@ -55,6 +54,7 @@ std::ostream& operator <<(std::ostream& os, Consultorio& c){
 		}else{
 			os<<"Sin pacientes\n";
 		}
+		p=c.medicos_.siguiente(p);
 	}
 	return os;
 }

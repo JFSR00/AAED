@@ -25,7 +25,7 @@ struct Medico{
 	bool operator ==(const Medico&);
 
 	Medico(int =0);
-	Medico(Medico&);
+	Medico(const Medico&);
 };
 
 class Consultorio{
