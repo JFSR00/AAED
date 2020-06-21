@@ -51,8 +51,8 @@ int main(){
 
 	cout<<linea.cerrarCajas()<<endl<<linea;
 
-	aux.setImporte(5.98);
-	linea.cobrarCliente(31,aux);
+//	aux.setImporte(5.98);
+//	linea.cobrarCliente(31,aux);
 
 	return 0;
 }

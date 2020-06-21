@@ -11,6 +11,7 @@
 void LineaCajas::abrirCaja(int idCaja, int idCajero){
 	assert(!(idCaja>=50||idCaja<0));
 	linea[idCaja].setCajero(idCajero);
+	linea[idCaja].setAbierta(true);
 }
 
 double LineaCajas::cerrarCaja(int idCaja){
@@ -21,7 +22,7 @@ double LineaCajas::cerrarCaja(int idCaja){
 
 void LineaCajas::cobrarCliente(int idCaja, Cliente cl){
 	assert(!(idCaja>=50||idCaja<0));
-	assert(!linea[idCaja].isAbierta());
+	assert(linea[idCaja].isAbierta());
 	linea[idCaja].setFacturacion(linea[idCaja].getFacturacion()+cl.getImporte());
 }
 
@@ -45,7 +46,7 @@ double LineaCajas::cerrarCajas(){
 std::ostream& operator <<(std::ostream& os, LineaCajas& l){
 	for(int i=0;i<50;i++){
 		if(l.linea[i].isAbierta()){
-			os<<"Caja "<<i<<":\n\tCajero: "<<l.linea[i].getCajero()<<"\n\tFacturaciÃ³n: "<<l.linea[i].getFacturacion()<<std::endl;
+			os<<"Caja "<<i<<":\n\tCajero: "<<l.linea[i].getCajero()<<"\n\tFacturación: "<<l.linea[i].getFacturacion()<<std::endl;
 		}
 	}
 	return os;
