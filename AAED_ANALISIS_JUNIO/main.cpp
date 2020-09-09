@@ -11,6 +11,10 @@
 
 using namespace std;
 
+const int N = 1000;
+const int BEGIN = 50;
+const int STEP = 50;
+
 bool simetrica(int **M, int n){
 	bool b = true;
 	int i = 0;
@@ -33,37 +37,37 @@ resolución del cronómetro es 0,01s. y que el error relativo máximo admitido es 0
  */
 
 int main(){
-	for(int n=50;n<=1000;n+=50){
-		//int M[n][n], T[n][n];
+	// Creación de los arrays bidimensionales
+	//int M[N][N], T[N][N];	// Esto produce overflows para N > 500
+	int **M,**T;
+	M = new int *[N];
+	for(int i=0;i<N;i++)
+	    M[i] = new int[N];
+	T = new int *[N];
+	for(int i=0;i<N;i++)
+	    T[i] = new int[N];
 
-		// Variables para la medición de tiempo
-		cronometro c;
-		long int r = 0;
-		const double e_abs = 0.01, // Máximo error absoluto cometido.
-					e_rel = 0.01; // Máximo error relativo aceptado.
+	// Variables para la medición de tiempo
+	cronometro c;
+	long int r = 0;
+	const double e_abs = 0.01, // Máximo error absoluto cometido.
+				e_rel = 0.01; // Máximo error relativo aceptado.
 
-		// Creación de los arrays bidimensionales
-		int **M,**T;
-		M = new int *[n];
-		for(int i=0;i<n;i++)
-		    M[i] = new int[n];
-		T = new int *[n];
-		for(int i=0;i<n;i++)
-		    T[i] = new int[n];
-
-		// Creación de una matriz simétrica - Creamos una matriz simétrica porque es el peor caso
-		for(int i=0;i<n;i++){
-			for(int j=0;j<n;j++){
-				M[i][j]=j;
-				T[j][i]=j;
-			}
+	// Creación de una matriz simétrica - Creamos una matriz simétrica porque es el peor caso
+	// Creamos la matriz simétrica a partir de la suma de una matriz cualquiera y su traspuesta
+	for(int i=0;i<N;i++){
+		for(int j=0;j<N;j++){
+			M[i][j]=j;
+			T[j][i]=j;
 		}
-		for(int i=0;i<n;i++){
-			for(int j=0;j<n;j++){
-				M[i][j]+=T[j][i];
-			}
+	}
+	for(int i=0;i<N;i++){
+		for(int j=0;j<N;j++){
+			M[i][j]+=T[j][i];
 		}
+	}
 
+	for(int n=BEGIN;n<=N;n+=STEP){
 		// Medición del tiempo de ejecución
 		c.activar();
 		do{
@@ -72,6 +76,7 @@ int main(){
 		}while(c.tiempo()<e_abs/e_rel+e_abs);
 		c.parar();
 		double t=c.tiempo()/r;
+		r=0;
 
 		cout<<"Tiempo para N = "<<n<<": "<<t<<" ms"<<endl;
 	}
