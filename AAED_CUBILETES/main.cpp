@@ -27,34 +27,45 @@ Pila<tCubo> juego(Pila<tCubo>);
 int tamMax(Pila<tCubo>);
 
 int main(){
+	Pila<tCubo> ej1,res;
+	ej1.push(tCubo(1,true));
+	ej1.push(tCubo(3,false));
+	ej1.push(tCubo(5,false));
+	ej1.push(tCubo(4,true));
+	ej1.push(tCubo(2,false));
+
+	res=juego(ej1);
+
+	while(!res.vacia()){
+		cout<<res.top().getTamano()<<"\t"<<boolalpha<<res.top().isAbajo()<<endl;
+		res.pop();
+	}
+
 	return 0;
 }
 
 Pila<tCubo> juego(Pila<tCubo> P){
 	Pila<tCubo> res, aux;
 	tCubo cubo;
-	int tMax=tamMax(P);
+	int tMax = 0;
 
-	while(!P.vacia()||!aux.vacia()){
-		if(P.vacia()||aux.vacia()){
-			if(aux.vacia()){
-				while(P.top().getTamano()!=tMax){
-					aux.push(P.top());
-					P.pop();
-				}
-				cubo=P.top();
-				P.pop();
-			}else{
-				while(aux.top().getTamano()!=tMax){
-					P.push(P.top());
-					aux.pop();
-				}
-				cubo=aux.top();
-				aux.pop();
-			}
+	while(!P.vacia()){
+		tMax = tamMax(P);
 
-			res.push(cubo);
-		}// El programa está terminado en papel
+		while(P.top().getTamano()!=tMax){
+			aux.push(P.top());
+			P.pop();
+		}
+		cubo=P.top();
+		P.pop();
+
+		if(!cubo.isAbajo()){cubo.darVuelta();}
+		res.push(cubo);
+
+		while(!aux.vacia()){
+			P.push(aux.top());
+			aux.pop();
+		}
 	}
 
 	return res;

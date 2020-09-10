@@ -43,7 +43,7 @@ tope(0)
 }
 
 template<typename T>
-Pila<T>& operator =(const Pila<T>& p)
+Pila<T>& Pila<T>::operator =(const Pila<T>& p)
 {
 	if(this!=&p)
 	{
