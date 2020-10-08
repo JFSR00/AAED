@@ -133,6 +133,9 @@ tEstado *aplicaOperador(unsigned op, tEstado *estado)
 {
 	tEstado *nuevo= (tEstado *) malloc(sizeof(tEstado));
 	memcpy(nuevo, estado,sizeof(tEstado));  // Hace una copia del estado
+
+	int ficha;
+
 	switch(op){
 	case ARRIBA:
 		nuevo->fila[0]-=1;
@@ -149,10 +152,14 @@ tEstado *aplicaOperador(unsigned op, tEstado *estado)
 	default:
 		break;
 	}
-	nuevo->celdas[estado->fil[0]][estado->col[0]]=nuevo->celdas[nuevo->fil[0]][nuevo->col[0]];
-	nuevo->celdas[nuevo->fil[0]][nuevo->col[0]]=0;
-	nuevo->fila[celdas[estado->fil[0]][estado->col[0]]]=estado->fila[0];
-	nuevo->col[celdas[estado->fil[0]][estado->col[0]]]=estado->col[0];
+	ficha=nuevo->celdas[nuevo->fila[0]][nuevo->col[0]];
+
+	nuevo->celdas[estado->fila[0]][estado->col[0]]=ficha;
+
+	nuevo->fila[ficha]=estado->fila[0];
+	nuevo->col[ficha]=estado->col[0];
+
+	nuevo->celdas[nuevo->fila[0]][nuevo->col[0]]=0;
 	return nuevo;
 }
 
