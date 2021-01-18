@@ -5,12 +5,32 @@
  *      Author: JFSR00
  */
 
+#include <cstring>
 #include "pila_din.hpp"
 #include "estacion.hpp"
 
-Estacion::Estacion(int n):_vias(new Matricula[n]), nVias(n){}
+Estacion::Estacion(int n):_vias(new Tren[n]), nVias(n){}
 
-void Estacion::llegada(Matricula tren, int via){
+Estacion::Estacion(Estacion& cpy):_vias(new Tren[cpy.nVias]), nVias(cpy.nVias){
+	memcpy(_vias, cpy._vias, sizeof(Tren)*cpy.nVias);
+	_estacionamiento = cpy._estacionamiento;
+	_maniobras = cpy._maniobras;
+}
+
+Estacion& Estacion::operator =(const Estacion& est){
+	this->nVias = est.nVias;
+
+	delete[] this->_vias;
+	this->_vias = new Tren[this->nVias];
+	memcpy(this->_vias, est._vias, sizeof(Tren)*this->nVias);
+
+	this->_estacionamiento = est._estacionamiento;
+	this->_maniobras = est._maniobras;
+
+	return this;
+}
+
+void Estacion::llegada(Tren tren, int via){
 	if(isViaVacia(via)){
 		_vias[via] = tren;
 	}
@@ -20,12 +40,12 @@ void Estacion::salida(int via){
 	_vias[via] = 0;
 }
 
-void Estacion::transitoEstacionamiento(Matricula tren){
+void Estacion::transitoEstacionamiento(Tren tren){
 	salida(viaDeTren(tren));
 	_estacionamiento.push(tren);
 }
 
-void Estacion::estacionamientoTransito(Matricula tren, int via){
+void Estacion::estacionamientoTransito(Tren tren, int via){
 	bool fin=false;
 	if(isViaVacia(via)){
 		while(!_estacionamiento.vacia() && !fin){
@@ -45,7 +65,7 @@ void Estacion::estacionamientoTransito(Matricula tren, int via){
 	}
 }
 
-int Estacion::viaDeTren(Matricula tren){
+int Estacion::viaDeTren(Tren tren){
 	for(int i=0; i<nVias; i++){
 		if(_vias[i] == tren){
 			return i;
@@ -54,7 +74,7 @@ int Estacion::viaDeTren(Matricula tren){
 	return -1;
 }
 
-Matricula Estacion::trenEnVia(int via){
+Tren Estacion::trenEnVia(int via){
 	return _vias[via];
 }
 

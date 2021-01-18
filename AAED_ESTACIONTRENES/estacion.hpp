@@ -10,25 +10,27 @@
 
 #include "pila_din.hpp"
 
-typedef int Matricula;
+typedef int Tren;
 
 class Estacion{
 public:
 	Estacion(int =10);
+	Estacion(Estacion&);
+	Estacion& operator =(const Estacion&);
 
-	void llegada(Matricula, int);
+	void llegada(Tren, int);
 	void salida(int);
-	void transitoEstacionamiento(Matricula);
-	void estacionamientoTransito(Matricula, int);
-	int viaDeTren(Matricula);
-	Matricula trenEnVia(int);
+	void transitoEstacionamiento(Tren);
+	void estacionamientoTransito(Tren, int);
+	int viaDeTren(Tren);
+	Tren trenEnVia(int);
 
 private:
 	bool isViaVacia(int);
 
 	int nVias;
-	Matricula *_vias;
-	Pila<Matricula> _estacionamiento, _maniobras;
+	Tren *_vias;
+	Pila<Tren> _estacionamiento, _maniobras;
 };
 
 
