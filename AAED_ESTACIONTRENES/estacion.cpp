@@ -73,7 +73,7 @@ X	Crear una estación de N vías de tránsito.
 X	Llegada de un tren concreto a una vía libre dada.
 X	Salida de la estación del tren situado en una vía dada.
 X	Llevar un determinado tren desde una vía de tránsito a la vía de estacionamiento.
-	Llevar un tren determinado desde la vía de estacionamiento a una de las vías de tránsito.
+X	Llevar un tren determinado desde la vía de estacionamiento a una de las vías de tránsito.
 X	Vía en la que se encuentra un tren.
 X	Código del tren situado en una vía de tránsito.
 */
