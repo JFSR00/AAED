@@ -33,7 +33,7 @@ bool simetrica(int **M, int n){
 Implemente un programa para analizar experimentalmente el tiempo de ejecución de la función
 anterior en el caso peor, utilizando un esquema adaptativo de medida indirecta. El programa
 tomará medidas para matrices de orden 50 hasta 1 000 en incrementos de 50. Se asume que la
-resolución del cronómetro es 0,01s. y que el error relativo máximo admitido es 0,1%.
+resolución del cronómetro es 0,01s y que el error relativo máximo admitido es 0,1%.
  */
 
 int main(){
@@ -61,11 +61,13 @@ int main(){
 			T[j][i]=j;
 		}
 	}
+	/*// Este es un bucle que lo unico que hace es multiplicar por 2 el contenido de la matriz
 	for(int i=0;i<N;i++){
 		for(int j=0;j<N;j++){
 			M[i][j]+=T[j][i];
 		}
 	}
+	*/
 
 	for(int n=BEGIN;n<=N;n+=STEP){
 		// Medición del tiempo de ejecución
